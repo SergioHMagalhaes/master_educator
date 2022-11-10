@@ -1,28 +1,34 @@
 <template>
     <div class="container">
         <header class="header">
-            <nav class="navbar navbar-dark navbar-expand">
+            <nav class="navbar navbar-expand-sm navbar-dark ">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img src="../assets/logo.svg" class="logo" alt="Logo"></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <a class="navbar-brand" href="/"><img src="../assets/logo.svg" class="logo" alt="Logo"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+                    <div class="collapse navbar-collapse navbarNav" id="navbarSupportedContent" >
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                <a class="nav-link active"  href="/">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Features</a>
+                                <a class="nav-link" href="/trilhas">Trilhas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Pricing</a>
+                                <a class="nav-link" href="/premium">Premium</a>
                             </li>
                         </ul>
+                        <div class="buttonInsideMenu">
+                            <button class="buttonRegister">Cadastrar</button>
+                            <button class="buttonLogin">Entrar</button>
+                        </div>
                     </div>
-                    <button class="buttonRegister">Cadastrar</button>
-                    <button class="buttonLogin">Entrar</button>
+                    <div class="buttonOutsideMenu">
+                            <button class="buttonRegister">Cadastrar</button>
+                            <button class="buttonLogin">Entrar</button>
+                    </div>
+                    
                 </div>
             </nav>
         </header>
@@ -37,17 +43,16 @@ export default {
 
 <style>
 .navbar{
-    background-color: black !important;
     color: #FFF;
-    Z-Index: -1;
 }
 .logo{
     width: 40px;
 }
-#navbarNav{
+.navbarNav{
     display: flex;
     justify-content: center;
 }
+
 .buttonRegister, .buttonLogin{
     display: flex;
     justify-content: center;
@@ -64,5 +69,24 @@ export default {
 .buttonLogin{
     background: rgba(0, 0, 0, 0);
     border-color: #FD01A7;
+}
+
+.buttonInsideMenu{
+    display: none;
+}
+.buttonOutsideMenu{
+    display: flex;
+}
+
+@media screen and (max-width: 770px){
+    .navbarNav{
+        display: block;
+    }
+    .buttonInsideMenu{
+        display: flex;
+    }
+    .buttonOutsideMenu{
+        display: none;
+    }
 }
 </style>

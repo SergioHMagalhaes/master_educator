@@ -1,6 +1,6 @@
 <template>
   <footer class="d-flex justify-content-between">
-    <div>
+    <div class="Logo">
       <img id="logo" src="../assets/logo.svg" alt="logo">
       <p class="pLogo">Master Educator 2022 <br> Todos os direitos reservados</p>
     </div>
@@ -46,5 +46,28 @@ ul{
 li{
   padding: 15px;
   font-size: 25px;
+}
+
+img + p {
+    display: block;
+  }
+@media screen and (max-width: 576px){
+  img + p {
+    display: none;
+  }
+  .Logo{
+    display: flex;
+    justify-content: center;
+  }
+  footer{
+    display: block !important;
+  }
+  ul{
+  margin: 15px 0;
+  font-size: 15px;
+}
+li{
+  font-size: 21px;
+}
 }
 </style>
