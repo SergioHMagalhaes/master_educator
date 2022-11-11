@@ -7,6 +7,11 @@ const routes = [
     name: 'Home page',
     component: homePage
   },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('@/views/registerPage.vue'),
+  }
 ]
 
 const router = createRouter({
