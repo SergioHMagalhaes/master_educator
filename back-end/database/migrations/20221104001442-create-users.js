@@ -10,6 +10,11 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      userGroupId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -32,6 +37,12 @@ module.exports = {
           allowNull: false,
           defaultValue: Sequelize.fn('now'),
       }
+    });
+
+    await queryInterface.addConstraint('users', {
+      fields: ['email'],
+      type: 'unique',
+      name: 'uq_user_email',
     });
   },
 
