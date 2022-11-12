@@ -6,7 +6,7 @@
       <div id="title">
         <h1>Descubra os caminhos para impulsionar a sua carreira</h1>
         <h5>Com o Master Educator você embarca em uma jornada de aprendizado.</h5>
-        <button class="buttonBanner">INICIAR JORNADA</button>
+        <a href="/signup" class="buttonBanner">INICIAR JORNADA</a>
       </div>
       <img id="cardBanner" src="../assets/img/Statue.svg" alt="">
     </section>
@@ -109,6 +109,10 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono&display=swap');
+
+a{
+  text-decoration: inherit;
+}
 .container{
   color: #FFFEFD;
   font-family: 'DM Mono', monospace;

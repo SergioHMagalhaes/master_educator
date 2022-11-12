@@ -3,10 +3,13 @@
         <header class="header">
             <nav class="navbar navbar-expand-sm navbar-dark ">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="/"><img src="../assets/logo.svg" class="logo" alt="Logo"></a>
+                    <div class="divLogo">
+                        <a class="navbar-brand" href="/"><img src="../assets/logo.svg" class="logo" alt="Logo"></a>
+                    </div>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+                    
                     <div class="collapse navbar-collapse navbarNav" id="navbarSupportedContent" >
                         <ul class="navbar-nav">
                             <li class="nav-item">
@@ -20,13 +23,13 @@
                             </li>
                         </ul>
                         <div class="buttonInsideMenu">
-                            <button class="buttonRegister">Cadastrar</button>
-                            <button class="buttonLogin">Entrar</button>
+                            <a href="/signup" class="buttonRegister">Cadastrar</a>
+                            <a href="/login" class="buttonLogin">Entrar</a>
                         </div>
                     </div>
                     <div class="buttonOutsideMenu">
-                            <button class="buttonRegister">Cadastrar</button>
-                            <button class="buttonLogin">Entrar</button>
+                            <button class="buttonRegister"><a href="/signup">Cadastrar</a></button>
+                            <button class="buttonLogin"><a href="/login">Entrar</a></button>
                     </div>
                     
                 </div>
@@ -41,14 +44,33 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+a{
+    color:#FFFFFFFF;
+    text-decoration: inherit;
+}
+a:link{
+    color: #FFFFFFFF;
+    text-decoration: inherit;
+}
+a:hover{
+    color: #FFFFFFFF;
+    text-decoration: inherit;
+}
+.collapse{
+    margin: auto;
+}
 .navbar{
     color: #FFF;
 }
 .logo{
     width: 40px;
 }
+.divLogo{
+    width: 200px;
+}
 .navbarNav{
+
     display: flex;
     justify-content: center;
 }
