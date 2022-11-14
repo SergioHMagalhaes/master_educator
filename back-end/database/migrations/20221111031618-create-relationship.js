@@ -26,7 +26,7 @@ module.exports = {
     }])
    
     let salt = bcrypt.genSaltSync(10)
-    let hash = bcrypt.hashSync('Admin!grupo7', salt)
+    let hash = bcrypt.hashSync('admin', salt)
     await queryInterface.bulkInsert('users', [{
       userId: 1,
       userGroupId: 3,
