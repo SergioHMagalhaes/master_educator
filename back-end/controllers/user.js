@@ -24,8 +24,8 @@ exports.login = async (req, res) => {
         if(!email, !password)
             return res.status(400).json({ message: "Dados enviados incorretamente." });
 
-        const token = await services.generateJWT(email, password)
-        if(token) return res.status(200).json({ token: token });
+        const result = await services.generateJWT(email, password)
+        if(result) return res.status(200).json({ token: result.token, user: result.user });
         else return res.status(401).json({ message: 'Senha incorreta.' });
        
     } catch(err){

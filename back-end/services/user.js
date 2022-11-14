@@ -31,11 +31,13 @@ module.exports = {
         if(!user) return
         const correctPassword = await bcrypt.compare(password, user.password)
         if(correctPassword){
-            const token =  jwt.sign({ 
-                email: user.email,
-                userGroup: user.userGroups.name
-            }, `${process.env.DB_URL}` );
-            return token
+            const userObject = {
+                name: user.name,
+                userGroup: user.userGroups.name,
+                email: user.email
+            }
+            const token =  jwt.sign(userObject, `${process.env.DB_URL}`);
+            return { token, user: userObject }
         }
     }
 }

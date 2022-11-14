@@ -11,8 +11,8 @@ export default {
     data(){
         return {
             inputs: [
-                {name: 'email', label:'E-mail'},
-                {name: 'password', label:'Senha'}
+                {name: 'email', label:'E-mail', type: 'email'},
+                {name: 'password', label:'Senha', type: 'password'}
             ]
         }
     }

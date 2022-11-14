@@ -8,10 +8,10 @@
                 <h1>{{ title }}</h1>
                 <div class="text-field" v-for="(input, index) in inputs" :key="index">
                     <label :for="input.name">{{ input.label }}</label>
-                    <input type="text" :name="input.name" :placeholder="input.label">
+                    <input :type="input.type" :name="input.name" :placeholder="input.label" v-model="modal[input.name]">
                 </div>
-                    <button v-if="login" class="submitButton">Fazer login</button>
-                    <button v-else class="submitButton">Cadastra</button>
+                    <button v-if="login" class="submitButton" @click="signIn()">Fazer login</button>
+                    <button v-else class="submitButton" @click="signUp()">Cadastra</button>
                     
                     <p v-if="login">Não tem uma conta? <a href="/signup">Cadastre-se</a></p>
                     <p v-else>Já tem uma conta? <a href="/login">Faça login</a></p>
@@ -23,7 +23,18 @@
 </template>
 
 <script>
+import { signIn } from '../services/auth'
+import api from '../services/request'
 export default {
+    data() {
+        return {
+            modal: {
+                name: '',
+                email: '',
+                password: '' 
+            }
+        }
+    },
     props: {
         title: {
             type: String,
@@ -39,6 +50,18 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    methods: {
+        async signIn(){
+            await signIn(this.modal.email, this.modal.password)
+            this.$router.push({
+                path: '/',
+            })
+        },
+        async signUp(){
+            await api.create('/user', this.modal)
+            this.signIn()
+        }
     }
 }
 </script>
