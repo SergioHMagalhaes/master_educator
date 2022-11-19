@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import homePage from '../views/homePage.vue'
+import havePermission from '@/services/auth'
 
 const routes = [
   {
@@ -22,7 +23,13 @@ const routes = [
     name: 'Trails',
     component: () => import('@/views/trailsPage.vue'),
   },
- 
+  {
+    path: '/admin/registerTrails',
+    name: 'registerTrails',
+    component: () => import('@/views/Admin/registerTrails.vue'),
+    beforeEnter: havePermission('Super')
+    
+  }
 ]
 
 const router = createRouter({
