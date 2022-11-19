@@ -22,7 +22,7 @@
       <div class="row row-cols-md-3 row-cols-sm-2">
         <div v-for="(trail, index) in trails" :key="index">
           <div v-if="index <= 5" class="col">
-            <div class="card">
+            <div class="card" @click="openTrail(trail)">
               <img :src="trail.img" class="card-img" alt="nodejs">
               <div class="card-body d-flex justify-content-between">
                 <div>
@@ -103,19 +103,22 @@ export default {
         {name: "Microsoft Azure", category: "Cloud", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/1200px-Microsoft_Azure.svg.png"},
       ]
     }
+  },
+  methods: {
+    openTrail(trail){
+      this.$router.push({path: '/trails', query: trail})
+    }
   }
 }
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono&display=swap');
 
 a{
   text-decoration: inherit;
 }
 .container{
   color: #FFFEFD;
-  font-family: 'DM Mono', monospace;
 }
 #vector5{
   position: absolute;

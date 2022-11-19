@@ -16,7 +16,13 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('@/views/LoginPage.vue'),
-  }
+  },
+  {
+    path: '/trails',
+    name: 'Trails',
+    component: () => import('@/views/trailsPage.vue'),
+  },
+ 
 ]
 
 const router = createRouter({
