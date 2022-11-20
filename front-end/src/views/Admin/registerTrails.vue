@@ -23,6 +23,7 @@
       <button type="button" @click="handleResize"><i class="bi bi-aspect-ratio"></i></button>
       <button type="button" @click="heightAdd"><i class="bi bi-zoom-in"></i></button>
       <button type="button" @click="heightRemove"><i class="bi bi-zoom-out"></i></button>
+      <button type="button" data-bs-toggle="modal" data-bs-target="#modalCategory"><i class="bi bi-tag"></i></button>
       <button type="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Criar</button>
     </Panel>
     </VueFlow>
@@ -52,6 +53,34 @@
             <div class="modal-body modalBodyEdit">
               <p>Nome</p>
               <input id="name" type="text" v-model="node.label" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalCategory" class="modal" tabindex="-1" data-bs-target="#staticBackdrop">
+      <div class="modal-dialog modalEdit">
+        <div class="modal-content modalContentEdit">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body modalBodyEdit">
+            <div v-if="!creating">
+              <div v-if="categories[0]">
+                <p>Escolha uma categoria</p>
+                <select class="category" name="cars" id="cars" v-model="selectedCategory" v-for="category in categories" :key="category">
+                  <option class="bg-dark">{{category.name}}</option>
+                </select>
+                <p>Ou</p>
+              </div>
+              <p v-else>Nenhuma categoria cadastrada</p>
+              <button class="createButton buttonCategory" @click="creating = true">Criar Categoria</button>
+            </div>
+            <div v-else>
+              <label for="nameCategory">Nome da categoria </label>
+              <input id="nameCategory" class="my-4 title inputCategory" type="text" v-model="categoryName" name="Nome"/>
+              <button class="createButton buttonCategory" @click="createCategory">Criar</button>
             </div>
           </div>
         </div>
@@ -110,6 +139,10 @@ export default defineComponent({
       editModal: {
         label: ''
       },
+      creating: false,
+      categoryName: '',
+      categories: [],
+      selectedCategory: '',
       image: '',
       input: [],
       text: [],
@@ -117,7 +150,9 @@ export default defineComponent({
       elements: [ ]
     }
   },
-
+  created(){
+    this.searchCategory()
+  },
   methods: {
     update(nodeId) {
       this.text[nodeId] = marked.parse(this.input[nodeId])
@@ -206,13 +241,32 @@ export default defineComponent({
       this.image = ''
     },
     async create(){
+      let selectedCategory
+      this.categories.forEach((category) => {  
+        if(category.name == this.selectedCategory) return selectedCategory = category.idCategory
+      })
+
       const trail = {
         name: this.title,
         content: this.input,
         nodes: this.elements,
-        image: this.image
+        image: this.image,
+        idCategory: selectedCategory
       }
+
       await request.create('/trails', trail)
+    },
+
+    async createCategory(){
+      const category = { name: this.categoryName }
+      await request.create('/trails/category', category)
+      this.searchCategory()
+      this.creating = false
+    },
+
+    async searchCategory(){
+      const result = await request.list('trails/categories')
+      this.categories = result.data
     }
   }
 
@@ -353,6 +407,34 @@ export default defineComponent({
 }
 .createButton{
   background: linear-gradient(98.62deg, #FFAC30 -27.91%, #FD01A7 102.96%);
+}
+.buttonCategory{
+  margin:auto;
+  width: 125px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  color: #f0ffffde;
+  border: none;
+}
+
+.category{
+  width: 100%;
+  border: none;
+  padding: 15px;
+  background: rgba(55, 55, 55, 0.3);
+  border-radius: 5px;
+  font-size: 12pt;
+  box-shadow: 0px 20px 40px #00000056;
+  outline: none;
+  box-sizing: border-box;
+  color: #f0ffff94;
+}
+
+.inputCategory{
+  width: 210px;
 }
 
 </style>
