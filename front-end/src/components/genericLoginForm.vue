@@ -117,7 +117,7 @@ main{
     align-items: center;
     flex-direction: column;
     padding: 30px 35px;
-   background: rgba(55, 55, 55, 0.3);
+    background: rgba(55, 55, 55, 0.3);
     border-radius: 15px;
     box-shadow: 0px 20px 40px #00000056;
 }
