@@ -1,8 +1,17 @@
 const models = require('../database/models');
+const { Op } = require('sequelize')
 
 module.exports = {
     async createTrail(newTrail){
-        await models.trails.create(newTrail)        
+        return await models.trails.create(newTrail)
+    },
+
+    async findAllTrails(){
+        return await models.trails.findAll()
+    },
+
+    async retrieveTrails(idTrails){
+        return await models.trails.findOne({ where: { idTrails } })
     },
 
     async createCategory(newCategory){
@@ -10,6 +19,16 @@ module.exports = {
     },
 
     async findAllCategories(){
-        return await models.categories.findAll()
+        return await models.categories.findAll({
+            include: {
+                association: 'trails',
+                attributes: ['idCategory', 'idTrails', 'image', 'name', 'nodes', 'content', 'height'],
+                where: {
+                    idCategory: {
+                        [Op.col]: 'categories.idCategory'
+                    }
+                }
+            }
+        })
     }
 }

@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
     })
     Category.associate = (models) => {
         Category.hasMany(models.trails, {
-            foreignKey: 'idTrails',
+            foreignKey: 'idCategory',
             as: 'trails',
         });
     };

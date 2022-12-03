@@ -26,7 +26,11 @@ module.exports = (sequelize) => {
         content:{
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false
-        }
+        },
+        height: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+          },
     })
     Trail.associate = (models) => {
         Trail.belongsTo(models.categories, {

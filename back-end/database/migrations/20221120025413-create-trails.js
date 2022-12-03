@@ -32,6 +32,10 @@ module.exports = {
         type: DataTypes.ARRAY(DataTypes.TEXT),
         allowNull: false
       },
+      height: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
