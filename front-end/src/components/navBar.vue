@@ -41,7 +41,7 @@
                             <li class="dropdown-item nav-dropdown"><a class="nav-link" href="/premium">Premium</a></li>
                             <li><a class="dropdown-item" href="#">Minha lista</a></li>
                             <li><a class="dropdown-item" href="#">Configurações de perfil</a></li>
-                            <li v-if="user.userGroup == 'Super'"><a class="dropdown-item" href="#">Cadastrar trilha</a></li>
+                            <li v-if="user.userGroup == 'Super'"><a class="dropdown-item" href="/admin/registerTrails">Cadastrar trilha</a></li>
                             <li class="dropdown-item logOut" @click="logOut">Sair</li>
                         </ul>
                     </div>
@@ -88,6 +88,26 @@ export default {
 }
 </script>
 
+<style>
+.buttonRegister, .buttonLogin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 90px;
+    height: 20px;
+    background: linear-gradient(98.62deg, #FFAC30 -27.91%, #FD01A7 102.96%);
+    border-radius: 10px;
+    color: #FFF;
+    margin-right: 10px;
+}
+.buttonLogin{
+    background: rgba(0, 0, 0, 0);
+    border-color: #FD01A7;
+}
+
+</style>
+
 <style scoped>
 a{
     color:#FFFFFFFF;
@@ -114,29 +134,9 @@ a:hover{
     width: 200px;
 }
 .navbarNav{
-
     display: flex;
     justify-content: center;
 }
-
-.buttonRegister, .buttonLogin{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    width: 90px;
-    height: 20px;
-    background: linear-gradient(98.62deg, #FFAC30 -27.91%, #FD01A7 102.96%);
-    border-radius: 10px;
-    color: #FFF;
-    margin-right: 10px;
-}
-
-.buttonLogin{
-    background: rgba(0, 0, 0, 0);
-    border-color: #FD01A7;
-}
-
 .buttonInsideMenu{
     display: none;
 }
@@ -156,7 +156,11 @@ a:hover{
 .nav-dropdown{
     display: none;
 }
-
+.logged{
+    width: 175px;
+    display: flex;
+    justify-content: end;
+}
 @media screen and (max-width: 770px){
     .navbarNav{
         display: block;
