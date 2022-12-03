@@ -256,8 +256,8 @@ export default defineComponent({
         height: this.height
 
       }
-
       await request.create('/trails', trail)
+      this.$router.push({ path: '/trilhas'})
     },
 
     async createCategory(){
