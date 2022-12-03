@@ -2,12 +2,11 @@
     <div class="container">
         <h1 class="text-center">Trilhas</h1>
         <div class="row d-flex ">
-            <button class="buttonCategory"> Todos os cursos</button>
-            <button class="buttonCategory" v-for="category in categories" :key="category.name"> {{ category.name }}
-            </button>
+            <a class="buttonCategory" v-for="category in categories" :key="category.name" :href="'#'+category.name">{{ category.name }}
+            </a>
             <section>
                 <div v-for="category in categories" :key="category.idCategory">
-                    <h2>{{ category.name }}</h2>
+                    <h2 :id="category.name">{{ category.name }}</h2>
                     <div class="row">
                         <div class="col-1 me-4 my-2 cardTrail" v-for="trail in category.trails" :key="trail.name">
                             <div class="d-flex align-itens-start" @click="openTrail(trail)">
@@ -62,6 +61,8 @@ export default {
     background: rgba(55, 55, 55, 0.3);
     border-radius: 5px;
     color: #fffefda0;
+    text-decoration: none;
+    text-align: center;
 }
 .container{
     color: #fff;

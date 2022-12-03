@@ -7,7 +7,12 @@ module.exports = {
     },
 
     async findAllTrails(){
-        return await models.trails.findAll()
+        return await models.trails.findAll({
+            include: {
+                association: 'categories',
+                attributes: ['name'],
+            }
+        })
     },
 
     async retrieveTrails(idTrails){
