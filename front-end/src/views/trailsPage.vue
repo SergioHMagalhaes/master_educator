@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 99vh; width: 99vw; ">
+  <div :style="`height: ${height}vh; width: 99vw; `">
     <VueFlow @pane-ready="onPaneReady" v-model="elements" :node-types="nodeTypes" :default-zoom="1" :max-zoom="1" :zoom-on-scroll="false" :pan-on-drag="false" :nodes-draggable="false" :preventScrolling="false" :fit-view-on-init="true">
       <h1 class="text-white text-center">{{title}}</h1>
       <Background :gap="40" pattern-color="#81818a" />
@@ -13,11 +13,10 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <textarea v-model="input" @input="update"></textarea>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div v-html="text"></div>
+              <div class="htmlText" v-html="text[node.id]"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -34,88 +33,54 @@ import { Background } from '@vue-flow/additional-components'
 import { defineComponent, markRaw  } from 'vue'
 import CustomNode from './CustomNode.vue'
 import { marked } from 'marked'
+import request from '@/services/request'
 
 export default defineComponent({
   components: { VueFlow, CustomNode, Background },
   data() {  
     return {
-      input: "# hello",
-      text: '',
+      trails: '',
+      text: [],
       title: '',
       instance: null,
-      height: window.innerHeight,
+      height: 100,
       nodeTypes: {
         custom: markRaw(CustomNode),
       },
-      elements: [
-        {
-          id: '1',
-          position: { x: 671, y: 50 },
-          label: 'JavaScript',
-          class: 'flowCard',
-          type: 'custom',
-        },
-        {
-          id: '2',
-          position: { x: 414, y: 250 },
-          label: 'Express',
-          class: 'flowCard',
-          type: 'custom',
-        },
-        {
-          id: '3',
-          position: { x: 914, y: 250 },
-          label: 'Callbacks e Promises',
-          class: 'flowCard',
-          type: 'custom',
-        },
-        {
-          id: '4',
-          position: { x: 670, y: 250 },
-          label: 'Testes',
-          class: 'flowCard',
-          type: 'custom',
-        },
-      ]
+      elements: []
     }
   },
-  created: function () {
+  created: async function () {
     window.scroll(0, 0)
-    this.title = this.$route.query.name
-    this.elements.push(
-      {
-        id: 'e1-2',
-        source: '1',
-        target: '2',
-      },
-      {
-        id: 'e1-3',
-        source: '1',
-        target: '3',
-      },
-      {
-        id: 'e1-4',
-        source: '1',
-        target: '4',
-      })
   },
   methods: {
-    update() {
-      this.text = marked.parse(this.input)
-    },
-
-    onPaneReady(vueFlowInstance) {
+    async onPaneReady(vueFlowInstance) {
+      await this.retrieveTrail()
+      this.elements = this.trails.nodes
       vueFlowInstance.fitView()
       this.instance = vueFlowInstance
       window.addEventListener('resize', this.handleResize);
-      this.handleResize();
+      setTimeout(()=>{
+        this.handleResize();
+      },1)
+      
     },
 
     handleResize() {
-      const root = document.documentElement
-      root.style.setProperty('--zoom', `${window.innerHeight}px`)
       this.instance.fitView({ duration: 1000, padding: 0.5 })
+      this.instance.fitView({ zoomLevel: 1, duration: 1000, })
     },
+
+    async retrieveTrail(){
+      const id = this.$route.query.id
+      const result = await request.list(`trails/retrieve/${id}`)
+      this.trails = result.data
+      this.height = result.data.height
+      for (const index in this.trails.content) {
+        if(this.trails.content[index])
+        this.text[index] = marked.parse(this.trails.content[index]) 
+      }
+    }
   }
 
 })
@@ -124,9 +89,6 @@ export default defineComponent({
 <style>
 @import '@vue-flow/core/dist/style.css';
 @import '@vue-flow/core/dist/theme-default.css';
-:root{
-    --height: 720px;
-}
 
 .flowCard{
   box-sizing: border-box;

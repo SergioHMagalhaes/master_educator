@@ -20,7 +20,7 @@ const routes = [
   },
   {
     path: '/trails',
-    name: 'Trails',
+    name: 'trails',
     component: () => import('@/views/trailsPage.vue'),
   },
   {
@@ -28,6 +28,12 @@ const routes = [
     name: 'registerTrails',
     component: () => import('@/views/Admin/registerTrails.vue'),
     beforeEnter: havePermission('Super')
+    
+  },
+  {
+    path: '/trilhas',
+    name: 'All Trails',
+    component: () => import('@/views/allTrails.vue'),
     
   }
 ]

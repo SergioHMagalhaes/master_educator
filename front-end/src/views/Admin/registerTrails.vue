@@ -251,7 +251,9 @@ export default defineComponent({
         content: this.input,
         nodes: this.elements,
         image: this.image,
-        idCategory: selectedCategory
+        idCategory: selectedCategory,
+        height: this.height
+
       }
 
       await request.create('/trails', trail)
