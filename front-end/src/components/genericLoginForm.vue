@@ -55,7 +55,7 @@ export default {
         async signIn(){
             await signIn(this.modal.email, this.modal.password)
             this.$router.push({
-                path: '/',
+                path: '/trilhas',
             })
         },
         async signUp(){
