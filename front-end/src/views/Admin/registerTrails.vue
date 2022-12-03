@@ -69,8 +69,8 @@
             <div v-if="!creating">
               <div v-if="categories[0]">
                 <p>Escolha uma categoria</p>
-                <select class="category" name="cars" id="cars" v-model="selectedCategory" v-for="category in categories" :key="category">
-                  <option class="bg-dark">{{category.name}}</option>
+                <select class="category" name="cars" id="cars" v-model="selectedCategory">
+                  <option v-for="category in categories" :key="category" class="bg-dark">{{category.name}}</option>
                 </select>
                 <p>Ou</p>
               </div>
@@ -106,10 +106,11 @@
                 <img :src="image" class="w-25"/>
                 <button type="button" class="btn-close bg-secondary" @click="deleteImg"></button>
               </div>
+              <span class="text-danger warning" v-if="!image || !title || !selectedCategory">*Os campos a seguir não podem estar vazios: {{ !image ? '"imagem",' : '' }} {{ !title ? '"titulo",' : '' }} {{ !selectedCategory ? '"categoria"' : '' }} </span>
             </div>
             <div class="modal-footer">
               <button data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
-              <button v-if="!image" class="createButtonDisabled" disabled>Criar</button>
+              <button v-if="!image || !title || !selectedCategory" class="createButtonDisabled" disabled>Criar</button>
               <button v-else class="createButton" @click="create">Criar</button>
             </div>
           </div>
@@ -147,7 +148,7 @@ export default defineComponent({
       input: [],
       text: [],
       title: '',
-      elements: [ ]
+      elements: []
     }
   },
   created(){
@@ -439,6 +440,9 @@ export default defineComponent({
   width: 210px;
 }
 
+.warning{
+  font-size: 12px;
+}
 </style>
 
 <style scoped>
