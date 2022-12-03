@@ -19,6 +19,11 @@ const routes = [
     component: () => import('@/views/LoginPage.vue'),
   },
   {
+    path: '/premium',
+    name: 'premium',
+    component: () => import('@/views/PremiumPage.vue'),
+  },
+  {
     path: '/trails',
     name: 'trails',
     component: () => import('@/views/trailsPage.vue'),
@@ -34,7 +39,7 @@ const routes = [
     path: '/trilhas',
     name: 'All Trails',
     component: () => import('@/views/allTrails.vue'),
-    
+  
   }
 ]
 
