@@ -4,9 +4,13 @@
     <div id="vector5"></div>
     <section id="section1">
       <div id="title">
-        <h1>Descubra os caminhos para impulsionar a sua carreira</h1>
-        <h5>Com o Master Educator você embarca em uma jornada de aprendizado.</h5>
-        <a href="/signup" class="buttonBanner">INICIAR JORNADA</a>
+        <h1 v-if="logged" >Descubra os caminhos para impulsionar a sua carreira</h1>
+        <h1 v-else>Descubra os caminhos para impulsionar a sua carreira</h1>
+        <h5 v-if="logged">Diga adeus as propagandas, tenha antecipado as trilhas e desfrute de conteudos excluisvos!</h5>
+        <h5 v-else>Com o Master Educator você embarca em uma jornada de aprendizado.</h5>
+        <a v-if="logged" href="/premium" class="buttonBanner">VIRAR PREMIUM</a>
+        <a v-else href="/signup" class="buttonBanner">INICIAR JORNADA</a>
+        
       </div>
       <img id="cardBanner" src="../assets/img/Statue.svg" alt="">
     </section>
@@ -16,14 +20,15 @@
         <h4>Trilhas em destaque</h4>
         <p>Trilhas com conteúdo do mercado de trabalho</p>
       </div>
-      <div class="row d-flex justify-content-between mt-4">
-        <button class="buttonCategory" v-for="category in categories" :key="category.name"> {{ category.name }} </button>
+      <div class="row d-flex ms-1">
+        <button class="buttonCategory me-1 shadow-sm" @click="filterTrails('all')"> Todos </button>
+        <button class="buttonCategory mx-1 shadow-sm" v-for="category in categories" :key="category.name" @click="filterTrails(category.name)"> {{ category.name }} </button>
       </div>
       <div class="row row-cols-md-3 row-cols-sm-2">
         <div v-for="(trail, index) in trails" :key="index">
           <div v-if="index <= 5" class="col">
-            <div class="card">
-              <img :src="trail.img" class="card-img" alt="nodejs">
+            <div class="card" @click="openTrail(trail)">
+              <img :src="trail.image" class="card-img" alt="nodejs">
               <div class="card-body d-flex justify-content-between">
                 <div>
                   <span class="spanCard">Trilha</span>
@@ -31,7 +36,7 @@
                 </div>
                 <div>
                   <span class="spanCard">Categoria</span>
-                  <p>{{ trail.category }}</p>
+                  <p>{{ trail.categories.name }}</p>
                 </div>
               </div>
             </div>
@@ -39,7 +44,7 @@
         </div>
       </div>
       <div class="row d-flex justify-content-center">
-        <a href="#" class="buttonCategory" > Veja mais </a>
+        <a href="/trilhas" class="buttonCategory" > Veja mais </a>
       </div>
     </section>
     <section id="section3">
@@ -54,17 +59,17 @@
         <div class="card text-center p-5">
           <i class="bi bi-compass cardIcon"></i>
           <h4>Direção</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+          <p class="card-p">Encontre os melhores caminhos para seu futuro e avance em direção as suas oportunidades na área.</p>
         </div>
         <div class="card cardCenter text-center p-5">
           <i class="bi bi-journal-code cardIcon"></i>
           <h4>Conteúdo</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+          <p class="card-p">Especialize-se em stacks de ponta, com Os melhores conteúdos da internet sobre tecnologia em um lugar só.</p>
         </div>
         <div class="card text-center p-5">
           <i class="bi bi-people cardIcon"></i>
           <h4>Comunidade</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+          <p class="card-p">Nosso objetivo é que os usuários da plataforma possam aprimorar suas habilidades técnicas em um ambiente colaborativo e inovador.</p>
         </div>
       </div>
     </section>
@@ -72,8 +77,10 @@
     <section id="section4" class="d-flex justify-content-center">
       <div class="cardPremium text-center">
         <h2>Torne-se Premium!</h2>
-        <p class="w-75 m-auto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error earum quisquam voluptas ducimus accusamus itaque magni blanditiis quod, pariatur odio.</p>
-        <button class="buttonBanner m-auto mt-5">VIRAR PREMIUM</button>
+        <p class="w-75 m-auto">Faça parte da nossa comunidade premium hoje mesmo para ter um mundo de vantagens.</p>
+        <p class="w-75 m-auto" >
+          Tenha acesso a conteúdos exclusivos e diga adeus as propagandas!</p>
+        <a href="/premium" class="buttonBanner m-auto mt-5">VIRAR PREMIUM</a>
       </div>
     </section>
   </div>
@@ -81,9 +88,12 @@
 </template>
 
 <script>
+import request from '@/services/request'
+import { isSignedIn } from '../services/auth'
 export default {
   data() {
     return {
+      logged: false,
       categories: [
         {name: "Front-end"},
         {name: "Back-end"},
@@ -93,29 +103,56 @@ export default {
         {name: "UX & Design"},
         {name: "Inovação"}
       ],
-      trails:[
-        {name: "Node.js", category: "Back-end", img: "https://walde.co/wp-content/uploads/2016/09/nodejs_logo.png"},
-        {name: "JavaScript", category: "Back-end", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png"},
-        {name: "C#", category: "Back-end", img: "https://growiz.com.br/wp-content/uploads/2020/08/kisspng-c-programming-language-logo-microsoft-visual-stud-atlas-portfolio-5b899192d7c600.1628571115357423548838.png"},
-        {name: "Laravel", category: "Back-end", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/1200px-Laravel.svg.png"},
-        {name: "JavaScript", category: "Front-end", img: "https://static.javatpoint.com/images/javascript/javascript_logo.png"},
-        {name: "Vue.js", category: "Front-end", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png"},
-        {name: "Microsoft Azure", category: "Cloud", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/1200px-Microsoft_Azure.svg.png"},
-      ]
+      originalTrails: [],
+      trails:[]
+    }
+  },
+  created: function(){
+    this.searchTrails()
+    this.searchCategory()
+    this.isLoggedIn()
+  },
+  methods: {
+    isLoggedIn() {
+      const { isLoggedIn } = isSignedIn()
+      if (isLoggedIn) {
+        this.logged = true
+      } else {
+        this.logged = false
+      }
+    },
+    openTrail(trail){
+      this.$router.push({path: '/trails', query: trail})
+    },
+
+    async searchTrails(){
+      const result = await request.list('trails')
+      this.originalTrails = result.data
+      this.trails = result.data
+    },
+    
+    async searchCategory(){
+      const result = await request.list('trails/categories')
+      this.categories = result.data
+    },
+
+    filterTrails(category){
+      if(category == 'all') this.trails = this.originalTrails
+      else{
+        this.trails = this.originalTrails.filter(trail => trail.categories.name == category)
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono&display=swap');
 
 a{
   text-decoration: inherit;
 }
 .container{
   color: #FFFEFD;
-  font-family: 'DM Mono', monospace;
 }
 #vector5{
   position: absolute;
@@ -164,6 +201,7 @@ a{
   padding: 5px;
   width: 150px;
   height: 40px;
+  border: none;
   background: rgba(55, 55, 55, 0.3);
   border-radius: 5px;
   color: #fffefda0;
@@ -180,6 +218,10 @@ a{
   background: rgba(55, 55, 55, 0.3);
   backdrop-filter: blur(3.62842px);
   border-radius: 9px;
+}
+
+.card-p{
+  max-width: 300px;
 }
 
 .card img{
@@ -312,6 +354,10 @@ a{
 .cardCenter{
  margin-left: 0;
  margin-right: 0;
+}
+
+.card-p{
+  margin: auto;
 }
 }
 

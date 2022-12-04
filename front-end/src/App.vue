@@ -18,11 +18,12 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 html, body {
   overflow-x: hidden;
-}
-body{
   position: relative;
-  background-color: #000000 !important;
+  background-color: #13111C !important;
+  font-family: 'Inter', sans-serif;
+  z-index: 0;
 }
 </style>
