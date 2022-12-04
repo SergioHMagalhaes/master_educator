@@ -27,7 +27,7 @@
       <div class="row row-cols-md-3 row-cols-sm-2">
         <div v-for="(trail, index) in trails" :key="index">
           <div v-if="index <= 5" class="col">
-            <div class="card" @click="openTrail(trail)">
+            <div class="card" @click="openTrail(trail.idTrails)">
               <img :src="trail.image" class="card-img" alt="nodejs">
               <div class="card-body d-flex justify-content-between">
                 <div>
@@ -121,8 +121,8 @@ export default {
         this.logged = false
       }
     },
-    openTrail(trail){
-      this.$router.push({path: '/trails', query: trail})
+    openTrail(id){
+      this.$router.push({path: '/trails', query: { id: id }})
     },
 
     async searchTrails(){
