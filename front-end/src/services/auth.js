@@ -36,7 +36,6 @@ export function isSignedIn () {
 }
 
 export default (userGroup) =>  async (to, from, next) => {
-  console.log(userGroup, to, from, next)
     const { isLoggedIn, decoded } = isSignedIn()
     if(isLoggedIn) {
       if(decoded.userGroup == 'Super') next();

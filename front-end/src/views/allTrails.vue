@@ -40,7 +40,7 @@ export default {
 
     methods: {
         async searchCategory(){
-            const result = await request.list('trails/categories')
+            const result = await request.list('trails/categoriesAndTrails')
             this.categories = result.data
         },
 

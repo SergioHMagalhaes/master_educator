@@ -24,6 +24,10 @@ module.exports = {
     },
 
     async findAllCategories(){
+        return await models.categories.findAll()
+    },
+
+    async findAllCategoriesAndTrails(){
         return await models.categories.findAll({
             include: {
                 association: 'trails',

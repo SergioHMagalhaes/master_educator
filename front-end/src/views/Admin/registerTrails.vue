@@ -111,7 +111,7 @@
             <div class="modal-footer">
               <button data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
               <button v-if="!image || !title || !selectedCategory" class="createButtonDisabled" disabled>Criar</button>
-              <button v-else class="createButton" @click="create">Criar</button>
+              <button v-else class="createButton" @click="create" aria-label="Close">Criar</button>
             </div>
           </div>
         </div>
@@ -263,7 +263,7 @@ export default defineComponent({
     async createCategory(){
       const category = { name: this.categoryName }
       await request.create('/trails/category', category)
-      this.searchCategory()
+      await this.searchCategory()
       this.creating = false
     },
 

@@ -3,9 +3,13 @@ import { axios } from './api'
 
 export default {
   async create(route, data) {
-    return api.post(route, data)
-  },
-
+    const token = localStorage.getItem('auth_token');
+    return api.post(route, { ...data }, {
+      headers: {
+        'Authorization': `Basic ${token}` 
+      }}
+    )
+},
   async list(route){
     return api.get(route)
   },
@@ -14,7 +18,6 @@ export default {
   async imageUpload(img) {
     const formData = new FormData()
     formData.append('image', img)
-    console.log(formData)
 
     const config = {
       method: 'POST',

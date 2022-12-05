@@ -55,3 +55,12 @@ exports.listCategories = async (req, res) => {
     }
 }
 
+exports.listCategoriesAndTrails = async (req, res) => {
+    try{
+        const result = await services.findAllCategoriesAndTrails()
+        return res.status(200).json(result);
+    } catch(err){
+        return res.status(500).json({ message: "Falha ao realizar busca no banco! Código: 500." })
+    }
+}
+

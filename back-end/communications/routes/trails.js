@@ -11,12 +11,16 @@ router.get('/retrieve/:id', async (req, res) => {
     controller.retrieveTrails(req, res)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware('Super'), async (req, res) => {
     controller.create(req, res)
 })
 
 router.get('/categories', async (req, res) => {
     controller.listCategories(req, res)
+})
+
+router.get('/categoriesAndTrails', async (req, res) => {
+    controller.listCategoriesAndTrails(req, res)
 })
 
 router.post('/category', authMiddleware('Super'), async (req, res) => {
